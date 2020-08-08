@@ -1,0 +1,4 @@
+Django==3.0.9
+django-crispy-forms==1.9.2
+django-jsonfield==1.4.0
+Pillow==7.2.0

@@ -1,0 +1,43 @@
+{% extends '../base.html' %}
+
+{% block content %}
+    <div class="col-md-6 offset-md-6">
+        {% include '../messages_and_errors.html' %}
+    </div>
+
+    <form action="{% url 'quiz:quiz-questions' quiz_exam_slug=quiz_exam_slug %}" method="POST">
+        {% csrf_token %}
+        
+        {% for result in results %}
+            <div class="col-md-12 my-2">
+                <div><span class="question__id">{{forloop.counter}}.</span>&nbsp;&nbsp;&nbsp;&nbsp;{{result.question.name}}</div>
+                <div class="row">
+                    {% for opt in result.options %}
+                        <div class="col-md-6 my-2 pl-5">
+                            <input type="checkbox" id="{{opt.id}}" name="{{result.question.id}}" value="{{opt.id}}" />&nbsp;&nbsp;<label for="{{opt.id}}">{{opt.name}}</label>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+        
+        {% if results %}
+            <input type="text" id="user_response" class="d-none" />
+            <button type="submit" class="btn btn-primary pull-right my-4">Submit</button>
+        {% else %}
+            <h3 class="text-center">There are no questions for this quiz exam yet!</h3><hr />
+        {% endif %}
+    </form>
+{% endblock content %}
+
+{% block extra_js %}
+<script>
+    $('form').on('submit', function(e) {
+        e.preventDefault();
+        var data = $(this).serialize();
+        //console.log(data);
+        $('#user_response').val(data);
+        e.currentTarget.submit();
+    });
+</script>
+{% endblock extra_js %}

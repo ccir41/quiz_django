@@ -1,0 +1,6 @@
+{% extends '../base.html' %}
+
+{% block content %}
+    <div>Your score is: {{score}}</div>
+    <a href="{% url 'core:home' %}">Back to home</a>
+{% endblock content %}

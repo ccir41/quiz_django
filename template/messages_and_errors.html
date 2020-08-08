@@ -1,0 +1,18 @@
+{% if messages %}
+	<div class="mt-2 text-center wow fadeInRight">
+		{% for message in messages %}
+			{% if message.tags == 'error' %}
+				<div class="alert alert-danger alert-auto-dismiss">
+			{% elif message.tags == 'success' %}
+				<div class="alert alert-success alert-auto-dismiss">
+			{% elif message.tags == 'warning' %}
+				<div class="alert alert-warning alert-auto-dismiss">
+			{% else %}
+				<div class="alert alert-info alert-auto-dismiss">
+			{% endif %}
+				<a class="close" href="#" data-dismiss="alert">x</a>
+				{{message}}
+			</div>
+		{% endfor %}
+	</div>
+{% endif %}

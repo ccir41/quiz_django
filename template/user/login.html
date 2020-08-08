@@ -1,0 +1,27 @@
+{% extends '../base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <h3 class="text-center">Log In</h3>
+            <hr />
+        </div>
+        <div class="col-md-6 offset-md-3">
+            {% include '../messages_and_errors.html' %}
+            <form action="{% url 'user:login' %}" method="POST">
+                {% csrf_token %}
+                {% for field in form %}
+                    {{ field|as_crispy_field }}
+                {% endfor %}
+                <button class="btn btn-primary pull-right mb-2" type="submit">Submit</button>
+            </form>
+            <div>
+                <p class="text-xs-center">
+                    <a href="{% url 'user:signup' %}">Need a Account?</a>
+                </p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends '../base.html' %}
+
+{% block content %}
+    <div class="col-md-12">
+        <div class="text-center category__title my-2">Exam Lists of Category - {{category.name}}</div>
+        <hr />
+        {% if quiz_exams %}
+            <div class="row">
+                {% for quiz_exam in quiz_exams %}
+                    <div class="col-md-4 category__div">
+                        <a href="{% url 'quiz:quiz-questions' quiz_exam_slug=quiz_exam.slug %}"><div class="category__name">{{quiz_exam.name}}</div></a>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="text-center">No exams for this category yet!</div>
+        {% endif %}
+    </div>
+{% endblock content %}

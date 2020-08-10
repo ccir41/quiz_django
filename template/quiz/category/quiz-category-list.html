@@ -1,0 +1,80 @@
+{% extends '../../base.html' %}
+{% load crispy_forms_tags %}
+
+{% load static %}
+
+
+{% block content %}
+    <div class="col-md-12">
+        {% include '../../messages_and_errors.html' %}
+    </div>
+    <div class="col-md-12">
+        <h3 class="text-center">Quiz Category List</h3>
+        <div>
+            <table class="table table-bordered table-striped table-hover table-responsive">
+                <thead>
+                    <tr>
+                        <th scope="col" class="text-center">SN</th>
+                        <th scope="col" class="text-center">Name</th>
+                        <th scope="col" class="text-center" colspan="3"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for quiz_category in object_list %}
+                    <tr>
+                        <th scope="row" class="text-center">{{forloop.counter}}</th>
+                        <td class="text-center">{{quiz_category.name}}</td>
+                        <td class="text-center"><a href={% url 'quiz:quiz-category-detail' slug=quiz_category.slug %}><button
+                                    class="btn btn-info">Detail</button></a></td>
+                        <td class="text-center"><a href={% url 'quiz:quiz-category-update' slug=quiz_category.slug %}><button
+                                    class="btn btn-warning">Update</button></a></td>
+                        <td class="text-center"><a href={% url 'quiz:quiz-category-delete' slug=quiz_category.slug %}><button
+                                    class="btn btn-danger">Delete</button></a></td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="text-center">No Quiz Categories yet!</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <br>
+            <div>
+                <a href={% url 'quiz:quiz-category-add' %}><button class="btn btn-success">Category</button></a>
+            </div>
+            <br>
+
+            {% if is_paginated%}
+            <nav aria-label="Page navigation example">
+                <ul class="pagination" style="justify-content: center;">
+                    {% if page_obj.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                    
+                    {% for i in paginator.page_range %}
+                        {% if page_obj.number == i %}
+                        <li class="active page-item"><a class="page-link" href="#"><span>{{ i }}</span></a></li>
+                        {% else %}
+                        <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                    
+                    {% if page_obj.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

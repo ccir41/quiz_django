@@ -1,7 +1,7 @@
 {% extends '../base.html' %}
 
 {% block content %}
-    <div class="col-md-6 offset-md-6">
+    <div class="col-md-12">
         {% include '../messages_and_errors.html' %}
     </div>
 
@@ -12,9 +12,12 @@
             <div class="col-md-12 my-2">
                 <div><span class="question__id">{{forloop.counter}}.</span>&nbsp;&nbsp;&nbsp;&nbsp;{{result.question.name}}</div>
                 <div class="row">
-                    {% for opt in result.options %}
+                    {% for option in result.options %}
                         <div class="col-md-6 my-2 pl-5">
-                            <input type="checkbox" id="{{opt.id}}" name="{{result.question.id}}" value="{{opt.id}}" />&nbsp;&nbsp;<label for="{{opt.id}}">{{opt.name}}</label>
+                            <div class="checkbox">
+                                <input type="checkbox" id="{{option.id}}" name="{{result.question.id}}" value="{{option.id}}" />
+                                <label for="{{option.id}}"><span>{{option.name}}</span></label>
+                            </div>
                         </div>
                     {% endfor %}
                 </div>

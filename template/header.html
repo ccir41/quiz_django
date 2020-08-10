@@ -11,6 +11,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'core:home' %}">Home</a>
                     </li>
+                    {% if request.user.is_superuser %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'quiz:quiz-admin' %}">Admin</a>
+                        </li>
+                    {% endif %}
                     {% if request.user.is_authenticated %}
                         <li class="nav-item">
                             <a class="nav-link" href="#">Profile</a>

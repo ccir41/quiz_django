@@ -1,6 +1,58 @@
 {% extends '../base.html' %}
+{% load to_str %}
 
 {% block content %}
-    <div>Your score is: {{score}}</div>
-    <a href="{% url 'core:home' %}">Back to home</a>
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-6">
+                <h4 class="text-center">Your score is: <span style="font-weight: bold;">{{score}}</span></h4>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="checkbox">
+                            <input type="checkbox" id="correct__answer" checked="true" disabled="true" />
+                            <label for="correct__answer"><span>Correct</span></label>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="false__checkbox">
+                            <input type="checkbox" id="incorrect__answer" disabled="true" checked="true" />
+                            <label for="incorrect__answer"><span>Incorrect</span></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr />
+    </div>
+    
+    
+    {% for result in results %}
+        <div class="col-md-12 my-2">
+            <div><span class="question__id">{{forloop.counter}}.</span>&nbsp;&nbsp;&nbsp;&nbsp;{{result.question.name}}</div>
+            <div class="row">
+                {% for option in result.options %}
+                    <div class="col-md-6 my-2 pl-5">
+                        {% if option.isAnswer %}
+                            <div class="checkbox">
+                                <input type="checkbox" id="{{option.id}}" checked="true" disabled="true" />
+                                <label for="{{option.id}}"><span>{{option.name}}</span></label>
+                            </div>
+                        {% elif not option.isAnswer and option.id|to_str in result.user_answer %}
+                            <div class="false__checkbox">
+                                <input type="checkbox" id="{{option.id}}" disabled="true" checked="true" />
+                                <label for="{{option.id}}"><span>{{option.name}}</span></label>
+                            </div>
+                        {% else %}
+                            <div class="checkbox">
+                                <input type="checkbox" id="{{option.id}}" disabled="true" />
+                                <label for="{{option.id}}"><span>{{option.name}}</span></label>
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endfor %}
 {% endblock content %}

@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.text import slugify
 from jsonfield import JSONField
 
 from core.models import BaseModel

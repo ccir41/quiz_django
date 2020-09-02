@@ -9,38 +9,41 @@
         {% include '../../messages_and_errors.html' %}
     </div>
     <div class="col-md-12">
-        <h3 class="text-center">Quiz Category List</h3>
+        <h3 class="text-center">Quiz Exam List</h3>
         <div>
             <table class="table table-bordered table-striped table-hover table-responsive">
                 <thead>
                     <tr>
                         <th scope="col" class="text-center">SN</th>
                         <th scope="col" class="text-center">Name</th>
-                        <th scope="col" class="text-center" colspan="3"></th>
+                        <th scope="col" class="text-center">Category</th>
+                        <th scope="col" class="text-center" colspan="4"></th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for quiz_category in quiz_categories %}
+                    {% for quiz_exam in quiz_exams %}
                     <tr>
                         <th scope="row" class="text-center">{{forloop.counter}}</th>
-                        <td class="text-center">{{quiz_category.name}}</td>
-                        <td class="text-center"><a href={% url 'quiz:quiz-category-detail' slug=quiz_category.slug %}><button
+                        <td class="text-center">{{quiz_exam.name}}</td>
+                        <td class="text-center">{{quiz_exam.category.name}}</td>
+                        <td class="text-center"><a href={% url 'quiz:quiz-exam-detail' slug=quiz_exam.slug %}><button
                                     class="btn btn-info">Detail</button></a></td>
-                        <td class="text-center"><a href={% url 'quiz:quiz-category-update' slug=quiz_category.slug %}><button
+                        <td class="text-center"><a href={% url 'quiz:quiz-exam-update' slug=quiz_exam.slug %}><button
                                     class="btn btn-warning">Update</button></a></td>
-                        <td class="text-center"><a href={% url 'quiz:quiz-category-delete' slug=quiz_category.slug %}><button
+                        <td class="text-center"><a href={% url 'quiz:quiz-exam-delete' slug=quiz_exam.slug %}><button
                                     class="btn btn-danger">Delete</button></a></td>
+                        <td class"text-center"><a href={% url 'quiz:quiz-question-list' quiz_exam_slug=quiz_exam.slug %}><button class="btn btn-success">Questions</button></a></td>
                     </tr>
                     {% empty %}
                     <tr>
-                        <td colspan="5" class="text-center">No Quiz Categories yet!</td>
+                        <td colspan="7" class="text-center">No Quiz Exams yet!</td>
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
             <br>
             <div>
-                <a href={% url 'quiz:quiz-category-add' %}><button class="btn btn-success"><i class="fa fa-plus mr-1"></i>Category</button></a>
+                <a href={% url 'quiz:quiz-exam-add' %}><button class="btn btn-success"><span><i class="fa fa-plus mr-1"></i>Exam</span></button></a>
             </div>
             <br>
 

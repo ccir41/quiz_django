@@ -1,0 +1,76 @@
+{% extends '../../base.html' %} {% load static %} {% block content %}
+
+<div class="col-md-12">
+  {% include '../../messages_and_errors.html' %}
+  <h3 class="text-center">Add Quiz Question</h3>
+  <form method="POST" action=".">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="question">Question</label>
+      <input
+        type="text"
+        class="form-control"
+        for="question"
+        name="question"
+        value="{{question.name}}"
+      />
+      <br />
+      <label for="option">Options</label><br />
+
+      <div class="options__container">
+        {% for option in question.options.all %}
+        <div class="form-check my-1">
+          {% if question.option.isAnswer %}
+          <input
+            class="form-check-input"
+            type="checkbox"
+            id="option{{option.id}}"
+            name="option{{option.id}}"
+            value="True"
+          />
+          {% else %}
+          <input
+            class="form-check-input"
+            type="checkbox"
+            id="option{{option.id}}"
+            name="option{{option.id}}"
+          />
+          {% endif %}
+          <input
+            class="form-control form-check-label"
+            name="option{{option.id}}"
+            for="option{{option.id}}"
+            value="{{option.name}}"
+          />
+        </div>
+        {% endfor %}
+      </div>
+
+      <button class="btn btn-secondary my-2 option-add">
+        <i class="fa fa-plus"></i>
+      </button>
+    </div>
+    <button class="btn btn-primary pull-right" type="submit">Submit</button>
+  </form>
+</div>
+{% endblock %} {% block extra_js %}
+<script>
+  $(".option-add").on("click", function (e) {
+    e.preventDefault();
+    var child_div_count = $(".options__container").children().length;
+    var option_content = '<div class="form-check my-1"><input class="form-check-input" type="checkbox" id="option" name="option" value="True" /><input class="form-control form-check-label" name="option" for="option" /></div>'.replaceAll(
+      "option",
+      "option" + (child_div_count + 1).toString()
+    );
+    //console.log(option_content);
+    $(option_content).appendTo(".options__container");
+    //console.log(child_div_count);
+  });
+
+  $("form").on("submit", function (e) {
+    e.preventDefault();
+    var data = $(this).serialize();
+    e.currentTarget.submit();
+  });
+</script>
+{% endblock %}

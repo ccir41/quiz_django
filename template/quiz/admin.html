@@ -1,27 +1,46 @@
-{% extends '../base.html' %}
-
-
-{% block content %}
-    <div class="col-md-12">
-        <div class="row">
-            <div class="row md-flex flex-row justify-content-around">
-                <div class="col-md-4 mb-3">
-                    <div class="card text-center">
-                        <div class="card-header font-weight-bold">
-                            Quiz Category
-                        </div>
-                        <div class="card-body">
-                            <h5 class="card-title"></h5>
-                            <p class="card-text">
-                                The button below will take you to the page where there are buttons for creating, editing and deleting the quiz category.
-                            </p>
-                        </div>
-                        <div class="card-footer text-muted">
-                            <a href="{% url 'quiz:quiz-category-list' %}" class="btn btn-info pull-right">List</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+{% extends '../base.html' %} {% block content %}
+<div class="col-md-12">
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <div class="card text-center">
+        <div class="card-header font-weight-bold">Quiz Category</div>
+        <div class="card-body">
+          <h5 class="card-title"></h5>
+          <p class="card-text">
+            The button below will take you to the page where there are buttons
+            for creating, editing and deleting the quiz category.
+          </p>
         </div>
+        <div class="card-footer text-muted">
+          <a
+            href="{% url 'quiz:quiz-category-list' %}"
+            class="btn btn-info pull-right"
+            >List</a
+          >
+        </div>
+      </div>
     </div>
+
+    <div class="col-md-6 mb-3">
+      <div class="card text-center">
+        <div class="card-header font-weight-bold">Quiz Exam</div>
+        <div class="card-body">
+          <h5 class="card-title"></h5>
+          <p class="card-text">
+            The button below will take you to the page where there are buttons
+            for creating, editing and deleting the quiz exams along with adding
+            quiz question.
+          </p>
+        </div>
+        <div class="card-footer text-muted">
+          <a
+            href="{% url 'quiz:quiz-exam-list' %}"
+            class="btn btn-info pull-right"
+            >List</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}

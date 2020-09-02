@@ -1,0 +1,17 @@
+{% extends '../../base.html' %}
+{% load crispy_forms_tags %}
+
+{% load static %}
+
+
+{% block content %}
+    <div class="col-md-12">
+        <h3 class="text-center my-4">Quiz Exam Detail</h3>
+        <h6 class="card text-center shadow p-2 mb-4">
+            {{ quiz_exam.name }}
+            <br />
+            Category: {{ quiz_exam.category.name }}
+        </h6>
+        <a href={% url 'quiz:quiz-exam-update' slug=quiz_exam.slug %}><button class="btn btn-warning pull-right">Update</button></a>
+    </div>
+{% endblock %}

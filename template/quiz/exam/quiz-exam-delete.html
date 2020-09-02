@@ -5,9 +5,9 @@
 
 {% block content %}
     <div class="col-md-12">
-        <h3 class="text-center my-4">Delete Quiz Category</h3>
+        <h3 class="text-center my-4">Delete Quiz Exam</h3>
         <form method="post">{% csrf_token %}
-            <h5 class="my-2">Are you sure you want to delete "{{ quiz_category.name }}"?</h5>
+            <h5 class="my-2">Are you sure you want to delete "{{ quiz_exam.name }}"?</h5>
             <input type="submit" value="Confirm" class="btn btn-danger pull-right">
         </form>
     </div>

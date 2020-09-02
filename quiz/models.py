@@ -56,6 +56,10 @@ class Question(BaseModel):
     def __str__(self):
         return self.name
 
+    @property
+    def options(self):
+        return Option.objects.filter(question=self)
+
 
 class Option(BaseModel):
     question = models.ForeignKey(

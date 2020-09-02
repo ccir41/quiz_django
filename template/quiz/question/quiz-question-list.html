@@ -1,5 +1,4 @@
 {% extends '../../base.html' %}
-{% load crispy_forms_tags %}
 
 {% load static %}
 
@@ -9,38 +8,40 @@
         {% include '../../messages_and_errors.html' %}
     </div>
     <div class="col-md-12">
-        <h3 class="text-center">Quiz Category List</h3>
+        <h3 class="text-center">Question List</h3>
         <div>
             <table class="table table-bordered table-striped table-hover table-responsive">
                 <thead>
                     <tr>
                         <th scope="col" class="text-center">SN</th>
                         <th scope="col" class="text-center">Name</th>
+                        <th scope="col" class="text-center">Quiz Exam</th>
                         <th scope="col" class="text-center" colspan="3"></th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for quiz_category in quiz_categories %}
+                    {% for question in questions %}
                     <tr>
                         <th scope="row" class="text-center">{{forloop.counter}}</th>
-                        <td class="text-center">{{quiz_category.name}}</td>
-                        <td class="text-center"><a href={% url 'quiz:quiz-category-detail' slug=quiz_category.slug %}><button
+                        <td class="text-center">{{question.name}}</td>
+                        <td class="text-center">{{question.quiz_exam.name}}</td>
+                        <td class="text-center"><a href={% url 'quiz:quiz-question-detail' quiz_exam_slug=quiz_exam_slug pk=question.pk %}><button
                                     class="btn btn-info">Detail</button></a></td>
-                        <td class="text-center"><a href={% url 'quiz:quiz-category-update' slug=quiz_category.slug %}><button
+                        <td class="text-center"><a href={% url 'quiz:quiz-question-update' quiz_exam_slug=quiz_exam_slug pk=question.pk %}><button
                                     class="btn btn-warning">Update</button></a></td>
-                        <td class="text-center"><a href={% url 'quiz:quiz-category-delete' slug=quiz_category.slug %}><button
+                        <td class="text-center"><a href={% url 'quiz:quiz-question-delete' quiz_exam_slug=quiz_exam_slug pk=question.pk %}><button
                                     class="btn btn-danger">Delete</button></a></td>
                     </tr>
                     {% empty %}
                     <tr>
-                        <td colspan="5" class="text-center">No Quiz Categories yet!</td>
+                        <td colspan="7" class="text-center">No Quiz Questions yet!</td>
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
             <br>
             <div>
-                <a href={% url 'quiz:quiz-category-add' %}><button class="btn btn-success"><i class="fa fa-plus mr-1"></i>Category</button></a>
+                <a href={% url 'quiz:quiz-question-add' quiz_exam_slug=quiz_exam_slug %}><button class="btn btn-success"><span><i class="fa fa-plus mr-1"></i>Question</span></button></a>
             </div>
             <br>
 

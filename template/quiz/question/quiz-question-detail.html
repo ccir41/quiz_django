@@ -1,0 +1,29 @@
+{% extends '../../base.html' %}
+
+{% load static %}
+
+
+{% block content %}
+    <div class="col-md-12">
+        <h3 class="text-center my-4">Question Detail</h3>
+        <div class="my-2"><strong>{{question.name}}</strong></div>
+        <div class="row">
+            {% for option in question.options.all %}
+                <div class="col-md-6 my-2 pl-5">
+                    {% if option.isAnswer %}
+                        <div class="checkbox">
+                            <input type="checkbox" id="{{option.id}}" checked="true" disabled="true" />
+                            <label for="{{option.id}}"><span>{{option.name}}</span></label>
+                        </div>
+                    {% else %}
+                        <div class="checkbox">
+                            <input type="checkbox" id="{{option.id}}" disabled="true" />
+                            <label for="{{option.id}}"><span>{{option.name}}</span></label>
+                        </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+        <a href={% url 'quiz:quiz-question-update' quiz_exam_slug=quiz_exam_slug pk=question.pk %}><button class="btn btn-warning pull-right">Update</button></a>
+    </div>
+{% endblock %}

@@ -4,39 +4,43 @@ A simple quiz application built with html5, css3, jquery, bootstrap4.5 and djang
 
 ## Getting started
 
-_git clone https://github.com/ccir41/quiz_django_
-_cd quiz_django_
+git clone https://github.com/ccir41/quiz_django
+
+cd quiz_django
 
 ## Create virtual environment and activate it
 
 ### Ubuntu
 
-_python3 -m venv quiz-venv_
-\_source quiz-venv/bin/activate
+python3 -m venv quiz-venv
+
+source quiz-venv/bin/activate
 
 ### Windows
 
-_py -m venv quiz-venv_
-_quiz-venv\Scripts\activate.bat_
+py -m venv quiz-venv
+
+quiz-venv\Scripts\activate.bat
 
 ## Install requirements
 
-_pip3 install -r requirements.txt_
+pip3 install -r requirements.txt
 
-_python manage.py makemigrations user quiz_
-_python manage.py migrate_
+python manage.py makemigrations user quiz
+
+python manage.py migrate
 
 ### Create Admin User
 
-_python manage.py createsuperuser_
+python manage.py createsuperuser
 
 ### Loding sample quiz from json file
 
-_python manage.py loaddata db.json_
+python manage.py loaddata db.json
 
 ### Run development server
 
-_python manage.py runserver 127.0.0.1:8000_
+python manage.py runserver 127.0.0.1:8000
 
 **Visit 127.0.0.1:8000**
 This is the home page of our quiz application which displays the quiz categories. If there were no quiz categories, they can be added by signing with admin user and navigating to admin section at top of navigation bar. Similiarly quiz exam and questions also can be added and updated with admin page.

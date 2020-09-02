@@ -6,7 +6,7 @@ from core.models import BaseModel
 from user.models import User
 
 # Data backup and restore
-# python manage.py dumpdata quiCategory quiz.QuizExam quiz.Question quiz.Option > db.json
+# python manage.py dumpdata quiz.Category quiz.QuizExam quiz.Question quiz.Option > db.json
 # python manage.py loaddata db.json
 
 

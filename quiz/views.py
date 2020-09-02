@@ -227,6 +227,7 @@ class QuizQuestionCreate(View):
     def post(self, request, *args, **kwargs):
         quiz_exam = QuizExam.objects.get(slug=kwargs.get('quiz_exam_slug'))
         data = dict(request.POST)
+        # print(data)
         if data.get('question') == ['']:
             messages.error(request, 'Question field should not be empty!')
         elif data.get('option1') is None or data.get('option1') == ['']:
@@ -270,6 +271,31 @@ class QuizQuestionUpdate(View):
 
     def post(self, request, *args, **kwargs):
         data = dict(request.POST)
+        # print(data)
+        for key, value in data.items():
+            if key == 'csrfmiddlewaretoken':
+                continue
+            if key == 'question':
+                question = Question.objects.filter(
+                    id=kwargs.get('pk')).update(name=value[0])
+                continue
+
+            option_id = int(key.split('option')[1])
+
+            try:
+                option = Option.objects.get(id=option_id)
+            except:
+                option = None
+
+            if option:
+                if len(value) > 1:
+                    option.name = value[1]
+                    option.isAnswer = True
+                    option.save()
+                else:
+                    option.name = value[0]
+                    option.isAnswer = False
+                    option.save()
         messages.success(request, 'Quiz question updated successfully!')
         return HttpResponseRedirect(reverse('quiz:quiz-question-list', kwargs={'quiz_exam_slug': kwargs.get('quiz_exam_slug')}))
 

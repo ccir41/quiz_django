@@ -7,7 +7,5 @@ __pycache__/
 .DS_Store
 db.*
 media/
-static/
 .vscode/
-*.json
 .env

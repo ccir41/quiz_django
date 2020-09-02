@@ -25,7 +25,7 @@
   $(".option-add").on("click", function (e) {
     e.preventDefault();
     var child_div_count = $(".options__container").children().length;
-    var option_content = '<div class="form-check my-1"><input class="form-check-input" type="checkbox" id="option" name="option" value="True" /><input class="form-control form-check-label" name="option" for="option" /></div>'.replaceAll(
+    var option_content = '<div class="form-check my-1"><input class="form-check-input" type="checkbox" id="option" name="option" /><input class="form-control form-check-label" name="option" for="option" /></div>'.replaceAll(
       "option",
       "option" + (child_div_count + 1).toString()
     );

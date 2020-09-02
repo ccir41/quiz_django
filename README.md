@@ -50,9 +50,7 @@ The user **response** will be displayed right after submitting the quiz exam.
 _snapshots of apps are inside img folder of static folder_
 
 **quiz exam page**
-![Image of quiz exam page]
-(https://github.com/ccir41/quiz_django/static/img/quiz_exam.png)
+(https://github.com/ccir41/quiz_django/blob/master/static/img/quiz_exam.png)
 
 **quiz result page**
-![Image of quiz result page]
-(https://github.com/ccir41/quiz_django/static/img/quiz_result.png)
+(https://github.com/ccir41/quiz_django/blob/master/static/img/quiz_result.png)

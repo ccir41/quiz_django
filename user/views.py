@@ -1,11 +1,13 @@
 from django.views import View
-from django.shortcuts import render, redirect, HttpResponseRedirect
+from django.shortcuts import render, redirect, HttpResponseRedirect, reverse
 from django.contrib import messages
 from django.core.cache import cache
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 
-from .forms import SignInForm, SignUpForm
+from .forms import SignInForm, SignUpForm, ProfileForm
+from .models import User
+from quiz.models import UserResponse, Question, Option
 
 
 def signup(request):
@@ -56,3 +58,50 @@ def logout_request(request):
     logout(request)
     messages.info(request, "User Logged Out!")
     return redirect('user:login')
+
+
+def profile(request, username=None):
+    user = User.objects.get(username=username)
+    user_response = UserResponse.objects.filter(user=user)
+    if request.method == 'POST':
+        form = ProfileForm(user, request.POST, request.FILES)
+        if form.is_valid():
+            form.save(user=user)
+            messages.success(request, "Profile Updated Successfully!")
+            return HttpResponseRedirect(reverse('user:profile', kwargs={'username': username}))
+    else:
+        form = ProfileForm(user)
+    return render(request, 'user/profile.html', {'form': form, 'user': user, 'user_response': user_response})
+
+
+def quiz_result(request, quiz_exam=None):
+    context = {}
+    try:
+        user_response = UserResponse.objects.get(
+            user=request.user, quiz_exam_id=quiz_exam)
+    except:
+        user_response = None
+    if user_response:
+        response = user_response.response
+        full_name = user_response.user.full_name
+        score = user_response.score
+        results = []
+        for key, value in response.items():
+            question = Question.objects.get(id=key)
+            options = []
+            for option in question.options.all():
+                options.append({
+                    'id': option.id,
+                    'name': option.name,
+                    'isAnswer': option.isAnswer
+                })
+            data = {
+                'question': question.name,
+                'options': options,
+                'user_answer': value
+            }
+            results.append(data)
+        context['full_name'] = full_name
+        context['score'] = score
+        context['results'] = results
+    return render(request, 'user/quiz-result.html', context=context)

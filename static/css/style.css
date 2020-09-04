@@ -121,3 +121,7 @@ body {
 .false__checkbox input[type="checkbox"]:focus + label::before {
   outline: 0;
 }
+
+.profile__description p {
+  margin: 4px 0;
+}

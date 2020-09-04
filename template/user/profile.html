@@ -1,0 +1,217 @@
+{% extends '../base.html' %} {% load crispy_forms_tags %} {% block content %}
+<div class="row">
+  <div class="col-md-12">{% include '../messages_and_errors.html' %}</div>
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="card-title mb-4">
+          {% if user.profile_picture.url %}
+          <img
+            src="{{user.profile_picture.url}}"
+            id="imgProfile"
+            style="width: 200px; height: 200px"
+            class="img-thumbnail"
+          />
+          {% else %}
+          <img
+            src="http://placehold.it/200x200"
+            id="imgProfile"
+            style="width: 200px; height: 200px"
+            class="img-thumbnail"
+          />
+          {% endif %}
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
+              <li class="nav-item">
+                <a
+                  class="nav-link active"
+                  id="basicInfo-tab"
+                  data-toggle="tab"
+                  href="#basicInfo"
+                  role="tab"
+                  aria-controls="basicInfo"
+                  aria-selected="true"
+                  >Basic Info</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  id="update-profile-tab"
+                  data-toggle="tab"
+                  href="#update-profile"
+                  role="tab"
+                  aria-controls="update-profile"
+                  aria-selected="false"
+                  >Update Profile</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  id="overview-tab"
+                  data-toggle="tab"
+                  href="#overview"
+                  role="tab"
+                  aria-controls="overview"
+                  aria-selected="false"
+                  >Overview</a
+                >
+              </li>
+            </ul>
+            <div class="tab-content ml-1" id="myTabContent">
+              <div
+                class="tab-pane fade show active"
+                id="basicInfo"
+                role="tabpanel"
+                aria-labelledby="basicInfo-tab"
+              >
+                {% if user.first_name and user.last_name %}
+                <div class="row">
+                  <div class="col-sm-3 col-md-2 col-5">
+                    <label class="font-weight-bold">Full Name</label>
+                  </div>
+                  <div class="col-md-8 col-5">{{user.full_name}}</div>
+                </div>
+                <hr />
+                {% endif %}
+                <div class="row">
+                  <div class="col-sm-3 col-md-2 col-5">
+                    <label class="font-weight-bold">Username</label>
+                  </div>
+                  <div class="col-md-8 col-5">
+                    <span class="font-italic">{{user.username}}</span>
+                  </div>
+                </div>
+                <hr />
+
+                <div class="row">
+                  <div class="col-sm-3 col-md-2 col-5">
+                    <label class="font-weight-bold">Email</label>
+                  </div>
+                  <div class="col-md-8 col-5">
+                    <span class="font-italic">{{user.email}}</span>
+                  </div>
+                </div>
+                <hr />
+                {% if user.address %}
+                <div class="row">
+                  <div class="col-sm-3 col-md-2 col-5">
+                    <label class="font-weight-bold">Address</label>
+                  </div>
+                  <div class="col-md-8 col-5">{{user.address}}</div>
+                </div>
+                <hr />
+                {% endif %} {% if user.bio %}
+                <div class="row">
+                  <div class="col-sm-3 col-md-2 col-5">
+                    <label class="font-weight-bold">Bio</label>
+                  </div>
+                  <div class="col-md-8 col-5">{{user.bio}}</div>
+                </div>
+                <hr />
+                {% endif %}
+              </div>
+              <div
+                class="tab-pane fade"
+                id="update-profile"
+                role="tabpanel"
+                aria-labelledby="update-profile-tab"
+              >
+                <div class="card">
+                  <form
+                    class="p-2"
+                    action="{% url 'user:profile' username=request.user.username %}"
+                    method="post"
+                    enctype="multipart/form-data"
+                  >
+                    {% csrf_token %}
+                    <div class="row">
+                      <div class="col-md-6">
+                        {{form.first_name|as_crispy_field}}
+                      </div>
+                      <div class="col-md-6">
+                        {{form.last_name|as_crispy_field}}
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        {{form.address|as_crispy_field}}
+                      </div>
+                    </div>
+                    <div class="row" style="padding: 0 15px">
+                      <div
+                        class="col-md-12"
+                        style="border: 1px solid rgba(0, 0, 0, 0.125)"
+                      >
+                        {{form.profile_picture|as_crispy_field}}
+                      </div>
+                    </div>
+                    <div class="row pt-2">
+                      <div class="col-md-12">{{form.bio|as_crispy_field}}</div>
+                    </div>
+                    <button
+                      class="btn btn-warning pull-right mb-2"
+                      type="submit"
+                    >
+                      Update
+                    </button>
+                  </form>
+                </div>
+              </div>
+
+              <div
+                class="tab-pane fade"
+                id="overview"
+                role="tabpanel"
+                aria-labelledby="overview-tab"
+              >
+                <table
+                  class="table table-bordered table-striped table-hover table-responsive"
+                >
+                  <thead>
+                    <tr>
+                      <th scope="col" class="text-center">SN</th>
+                      <th scope="col" class="text-center">Exam</th>
+                      <th scope="col" class="text-center">Category</th>
+                      <th scope="col" class="text-center">Score</th>
+                      <th scope="col" class="text-center" colspan="1"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for ur in user_response %}
+                    <tr>
+                      <th scope="row" class="text-center">
+                        {{forloop.counter}}
+                      </th>
+                      <td class="text-center">{{ur.quiz_exam.name}}</td>
+                      <td class="text-center">
+                        {{ur.quiz_exam.category.name}}
+                      </td>
+                      <td class="text-center">{{ur.score}}</td>
+                      <td class="text-center">
+                        <a
+                          href="{% url 'user:quiz-result' quiz_exam=ur.quiz_exam.id %}"
+                          ><button class="btn btn-success">View</button></a
+                        >
+                      </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                      <td colspan="5" class="text-center">No data yet!</td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,10 @@
+DEBUG=False
+SECRET_KEY=changethis
+DATABASE_NAME=changethis
+DATABASE_USER=changethis
+DATABASE_PASSWORD=changethis
+DATABASE_PORT=3306
+DATABASE_HOST=localhost
+AWS_ACCESS_KEY_ID=changethis
+AWS_SECRET_ACCESS_KEY=changethis
+AWS_STORAGE_BUCKET_NAME=changethis

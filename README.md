@@ -1,6 +1,6 @@
 # quiz_django
 
-A simple quiz application built with html5, css3, jquery, bootstrap4.5 and django.
+A simple quiz application built with html5, css3, jquery, bootstrap4.5 and django. Added functionalities for serving static files and media files through Amazon S3 buckets.
 
 ## Getting started
 
@@ -49,12 +49,30 @@ To give exam you have to click either of the categories which takes you to the e
 
 The user **response** will be displayed right after submitting the quiz exam.
 
-**In order to take exam, you should signed in**
+**_In order to take exam, you should signed in_**
 
-_snapshots of apps are inside img folder of static folder_
+##snapshots of quiz apps are
+
+**admin page**
+![](./static/img/admin_page.png)
+
+**category admin page**
+![](./static/img/category_admin.png)
+
+**quiz home page**
+![](./static/img/home_page.png)
+
+**quiz home page after login**
+![](./static/img/home_page2.png)
+
+**question list page**
+![](./static/img/question_list.png)
 
 **quiz exam page**
-(https://github.com/ccir41/quiz_django/blob/master/static/img/quiz_exam.png)
+![](./static/img/quiz_exam.png)
 
 **quiz result page**
-(https://github.com/ccir41/quiz_django/blob/master/static/img/quiz_result.png)
+![](./static/img/quiz_result.png)
+
+**user profile page**
+![](./static/img/quiz_profile.png)

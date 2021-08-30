@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models.fields.related import ManyToManyField
 from django.utils.text import slugify
 from jsonfield import JSONField
 
@@ -56,9 +57,9 @@ class Question(BaseModel):
     def __str__(self):
         return self.name
 
-    @property
-    def options(self):
-        return Option.objects.filter(question=self)
+    # @property
+    # def options(self):
+    #     return Option.objects.filter(question=self)
 
 
 class Option(BaseModel):

@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, TemplateView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
@@ -138,20 +138,10 @@ class QuizQuestions(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         quiz_exam_slug = kwargs.get('quiz_exam_slug')
         if quiz_exam_slug:
-            results = []
-            # use generator insted
-            questions = Question.objects.filter(
-                quiz_exam__slug__iexact=quiz_exam_slug)
-            for question in questions:
-                options = Option.objects.filter(question=question)
-                question_options = []
-                for opt in options:
-                    question_options.append({'id': opt.id, 'name': opt.name})
-                results.append({'question': {'id': question.id, 'name': question.name},
-                                'options': question_options})
+            questions = Question.objects.filter(quiz_exam__slug__iexact=quiz_exam_slug).prefetch_related('options')
         else:
-            results = []
-        return render(request, 'quiz/quiz-questions.html', {'results': results, 'quiz_exam_slug': quiz_exam_slug})
+            questions = []
+        return render(request, 'quiz/quiz-questions.html', {'questions': questions, 'quiz_exam_slug': quiz_exam_slug})
 
     def post(self, request, *args, **kwargs):
         data = dict(request.POST)

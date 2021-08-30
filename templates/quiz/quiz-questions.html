@@ -8,14 +8,14 @@
     <form action="{% url 'quiz:quiz-questions' quiz_exam_slug=quiz_exam_slug %}" method="POST">
         {% csrf_token %}
         
-        {% for result in results %}
+        {% for question in questions %}
             <div class="col-md-12 my-2">
-                <div><span class="question__id">{{forloop.counter}}.</span>&nbsp;&nbsp;&nbsp;&nbsp;{{result.question.name}}</div>
+                <div><span class="question__id">{{forloop.counter}}.</span>&nbsp;&nbsp;&nbsp;&nbsp;{{question.name}}</div>
                 <div class="row">
-                    {% for option in result.options %}
+                    {% for option in question.options.all %}
                         <div class="col-md-6 my-2 pl-5">
                             <div class="checkbox">
-                                <input type="checkbox" id="{{option.id}}" name="{{result.question.id}}" value="{{option.id}}" />
+                                <input type="checkbox" id="{{option.id}}" name="{{question.id}}" value="{{option.id}}" />
                                 <label for="{{option.id}}"><span>{{option.name}}</span></label>
                             </div>
                         </div>
@@ -24,7 +24,7 @@
             </div>
         {% endfor %}
         
-        {% if results %}
+        {% if questions %}
             <input type="text" id="user_response" class="d-none" />
             <button type="submit" class="btn btn-primary pull-right my-4">Submit</button>
         {% else %}

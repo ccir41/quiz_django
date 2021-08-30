@@ -5,6 +5,7 @@ botocore==1.21.0
 Django==3.2.5
 django-autocomplete-light==3.5.1
 django-crispy-forms==1.9.2
+django-debug-toolbar==3.2.2
 django-jsonfield==1.4.0
 django-storages==1.11.1
 jmespath==0.10.0

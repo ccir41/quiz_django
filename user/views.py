@@ -82,26 +82,7 @@ def quiz_result(request, quiz_exam=None):
     except:
         user_response = None
     if user_response:
-        response = user_response.response
-        full_name = user_response.user.full_name
-        score = user_response.score
-        results = []
-        for key, value in response.items():
-            question = Question.objects.get(id=key)
-            options = []
-            for option in question.options.all():
-                options.append({
-                    'id': option.id,
-                    'name': option.name,
-                    'isAnswer': option.isAnswer
-                })
-            data = {
-                'question': question.name,
-                'options': options,
-                'user_answer': value
-            }
-            results.append(data)
-        context['full_name'] = full_name
-        context['score'] = score
-        context['results'] = results
+        questions = Question.objects.filter(id__in=user_response.response.keys()).prefetch_related('options')
+        context['user_response'] = user_response
+        context['response'] = zip(questions, user_response.response.values())
     return render(request, 'user/quiz-result.html', context=context)

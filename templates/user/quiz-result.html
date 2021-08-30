@@ -3,7 +3,7 @@
   <div class="row">
     <div class="col-md-6">
       <h4 class="text-center">
-        Score: <span style="font-weight: bold">{{score}}</span>
+        Score: <span style="font-weight: bold">{{user_response.score}}</span>
       </h4>
     </div>
     <div class="col-md-6">
@@ -36,14 +36,14 @@
   <hr />
 </div>
 
-{% for result in results %}
+{% for question, user_answer in response %}
 <div class="col-md-12 my-2">
   <div>
     <span class="question__id">{{forloop.counter}}.</span
-    >&nbsp;&nbsp;&nbsp;&nbsp;{{result.question}}
+    >&nbsp;&nbsp;&nbsp;&nbsp;{{question.name}}
   </div>
   <div class="row">
-    {% for option in result.options %}
+    {% for option in question.options.all %}
     <div class="col-md-6 my-2 pl-5">
       {% if option.isAnswer %}
       <div class="checkbox">
@@ -55,7 +55,7 @@
         />
         <label for="{{option.id}}"><span>{{option.name}}</span></label>
       </div>
-      {% elif not option.isAnswer and option.id|to_str in result.user_answer %}
+      {% elif not option.isAnswer and option.id|to_str in user_answer %}
       <div class="false__checkbox">
         <input
           type="checkbox"

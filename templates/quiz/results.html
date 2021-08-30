@@ -43,7 +43,7 @@
     >&nbsp;&nbsp;&nbsp;&nbsp;{{result.question.name}}
   </div>
   <div class="row">
-    {% for option in result.options %}
+    {% for option in result.question.options.all %}
     <div class="col-md-6 my-2 pl-5">
       {% if option.isAnswer %}
       <div class="checkbox">

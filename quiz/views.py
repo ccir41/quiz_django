@@ -7,6 +7,8 @@ from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 
+from django.db.models import F
+
 from .models import Category, QuizExam, Question, Option, UserResponse
 from core.utils import StaffMemberRequiredMixin
 
@@ -146,44 +148,30 @@ class QuizQuestions(LoginRequiredMixin, View):
     def post(self, request, *args, **kwargs):
         data = dict(request.POST)
         quiz_exam = QuizExam.objects.get(slug=kwargs.get('quiz_exam_slug'))
-        # print(data)
-        response = {}
         score = 0
-        for key, value in data.items():
-            if key == 'csrfmiddlewaretoken':
-                continue
-            response[f"{key}"] = value
-            try:
-                for opt in value:
-                    option = Option.objects.get(
-                        id=int(opt), question_id=int(key))
-                    if option.isAnswer:
-                        is_correct = True
-                    else:
-                        is_correct = False
-                        break
-            except:
-                pass
-            if is_correct:
-                score += 1
-        try:
-            user_response = UserResponse.objects.get(
-                user=request.user, quiz_exam=quiz_exam)
+        del data['csrfmiddlewaretoken']
+        user_response, created = UserResponse.objects.get_or_create(
+            user=request.user,
+            quiz_exam=quiz_exam,
+            defaults={
+                'score': score,
+                'response': data,
+                'attempted': 1
+            }
+        )
+        if not created:
             user_response.score = score
-            user_response.response = response
+            user_response.response = data
+            user_response.attempted += 1
             user_response.save()
-        except:
-            user_response = UserResponse.objects.create(
-                user=request.user, quiz_exam=quiz_exam, score=score, response=response)
-
-        results = []
-        for key, value in response.items():
-            question = Question.objects.get(id=int(key))
-            options = Option.objects.filter(question=question)
-            results.append(
-                {'question': question, 'options': options, 'user_answer': value})
-
-        return render(request, 'quiz/results.html', {'score': score, 'results': results})
+        return render(
+            request,
+            'quiz/response.html',
+            {
+                'message': 'Your quiz has been submitted. Click the following link to view your result!',
+                'quiz_exam': quiz_exam.id
+            }
+        )
 
 
 class QuizQuestionList(ListView):

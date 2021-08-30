@@ -80,6 +80,7 @@ class UserResponse(BaseModel):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     quiz_exam = models.ForeignKey(QuizExam, on_delete=models.CASCADE)
     score = models.IntegerField()
+    attempted = models.PositiveBigIntegerField(default=0)
     response = JSONField()
 
     class Meta:

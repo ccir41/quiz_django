@@ -1,0 +1,8 @@
+{% extends '../base.html' %}  {% block content %}
+<div class="col-md-12 pt-5">
+    <div class="text-center pt-5">
+        <h5>{{message}}</h5>
+        <a href="{% url 'user:quiz-result' quiz_exam=quiz_exam %}"><button class="btn btn-success my-3">See Result!</button></a>
+    </div>
+</div>
+{% endblock content %}

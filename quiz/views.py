@@ -7,7 +7,7 @@ from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 
-from django.db.models import F
+from django.db.models import F, Count
 
 from .models import Category, QuizExam, Question, Option, UserResponse
 from core.utils import StaffMemberRequiredMixin
@@ -73,6 +73,10 @@ class QuizExamList(StaffMemberRequiredMixin, ListView):
     context_object_name = 'quiz_exams'
     template_name = 'quiz/exam/quiz-exam-list.html'
 
+    def get_queryset(self):
+        qs = super().get_queryset().select_related('category')
+        return qs
+
 
 class QuizExamDetail(StaffMemberRequiredMixin, DetailView):
     model = QuizExam
@@ -82,6 +86,10 @@ class QuizExamDetail(StaffMemberRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return context
+    
+    def get_queryset(self):
+        qs = super().get_queryset().select_related('category')
+        return qs
 
 
 class QuizExamCreate(StaffMemberRequiredMixin, CreateView):
@@ -150,6 +158,15 @@ class QuizQuestions(LoginRequiredMixin, View):
         quiz_exam = QuizExam.objects.get(slug=kwargs.get('quiz_exam_slug'))
         score = 0
         del data['csrfmiddlewaretoken']
+        questions = Question.objects.filter(id__in=data.keys()).prefetch_related('options')
+        for question, answer in zip(questions, data.values()):
+            answer_count = len(answer)
+            answer_count_check = 0
+            for option in question.options.all():
+                if str(option.id) in answer and option.isAnswer:
+                    answer_count_check += 1
+            if answer_count == answer_count_check:
+                score += 1
         user_response, created = UserResponse.objects.get_or_create(
             user=request.user,
             quiz_exam=quiz_exam,
@@ -181,7 +198,7 @@ class QuizQuestionList(ListView):
     template_name = 'quiz/question/quiz-question-list.html'
 
     def get_queryset(self):
-        qs = super().get_queryset()
+        qs = super().get_queryset().select_related('quiz_exam')
         return qs.filter(quiz_exam__slug=self.kwargs.get('quiz_exam_slug'))
 
     def get_context_data(self):

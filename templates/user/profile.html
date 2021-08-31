@@ -178,7 +178,8 @@
                       <th scope="col" class="text-center">Exam</th>
                       <th scope="col" class="text-center">Category</th>
                       <th scope="col" class="text-center">Score</th>
-                      <th scope="col" class="text-center" colspan="1"></th>
+                      <th scope="col" class="text-center"># Attempt</th>
+                      <th scope="col" class="text-center">Result</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -192,11 +193,11 @@
                         {{ur.quiz_exam.category.name}}
                       </td>
                       <td class="text-center">{{ur.score}}</td>
+                      <td class="text-center">{{ur.attempted}}</td>
                       <td class="text-center">
-                        <a
-                          href="{% url 'user:quiz-result' quiz_exam=ur.quiz_exam.id %}"
-                          ><button class="btn btn-success">View</button></a
-                        >
+                        <a href="{% url 'user:quiz-result' quiz_exam=ur.quiz_exam.id %}">
+                          <span class="badge badge-primary ">View</span>
+                        </a>
                       </td>
                     </tr>
                     {% empty %}

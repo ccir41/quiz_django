@@ -62,7 +62,7 @@ def logout_request(request):
 
 def profile(request, username=None):
     user = User.objects.get(username=username)
-    user_response = UserResponse.objects.filter(user=user)
+    user_response = UserResponse.objects.filter(user=user).select_related('quiz_exam')
     if request.method == 'POST':
         form = ProfileForm(user, request.POST, request.FILES)
         if form.is_valid():

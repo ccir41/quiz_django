@@ -1,5 +1,6 @@
 DEBUG=False
 SECRET_KEY=changethis
+DATABASE_ENGINE=django.db.backends.mysql
 DATABASE_NAME=changethis
 DATABASE_USER=changethis
 DATABASE_PASSWORD=changethis

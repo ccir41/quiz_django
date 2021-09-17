@@ -11,7 +11,7 @@ cd quiz_django
 ## Create virtual environment and activate it
 
 ### Ubuntu
-
+sudo apt-get install -y python3-venv
 python3 -m venv quiz-venv
 
 source quiz-venv/bin/activate
@@ -25,6 +25,8 @@ quiz-venv\Scripts\activate.bat
 ## Install requirements
 
 pip3 install -r requirements.txt
+
+*If you get mysqlclient error in ubuntu while installing requirement.txt try running command sudo apt-get install libmysqlclient-dev* 
 
 python manage.py makemigrations user quiz
 

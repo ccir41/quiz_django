@@ -8,6 +8,11 @@ git clone https://github.com/ccir41/quiz_django
 
 cd quiz_django
 
+### using docker
+`docker build . -t django-quiz-app`
+`docker volume create quiz_volume`
+`docker run --name django-quiz-app -d -p 9000:9000 -v quiz_volume:/app django-quiz-app`
+
 ## Create virtual environment and activate it
 
 ### Ubuntu

@@ -9,7 +9,6 @@ django-debug-toolbar==3.2.2
 django-jsonfield==1.4.0
 django-storages==1.11.1
 jmespath==0.10.0
-mysqlclient==2.0.3
 Pillow==7.2.0
 pycodestyle==2.6.0
 python-dateutil==2.8.2
